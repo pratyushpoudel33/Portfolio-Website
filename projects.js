@@ -10,6 +10,7 @@
  *   tags       — array of skill/tech strings (shown as pills)
  *   link       — URL or relative path for the primary CTA
  *   linkLabel  — CTA button text
+ *   githubLink — (optional) GitHub repo URL shown as a secondary button
  *   isLive     — (bool) if true, shows a "Live" badge on the card
  *   accent     — CSS hue value (0-360) used for card accent color theming
  */
@@ -58,8 +59,9 @@ const PROJECTS = [
     description:
       "An AI-powered web tool that analyses solar feasibility for any location in Nepal using natural language input. Powered by Gemini AI with real-time irradiance insights and a dynamic results dashboard.",
     tags: ["Gemini AI", "Node.js", "Renewable Energy", "NLP"],
-    link: "https://github.com/pratyushpoudel33/solar-feasibility",
-    linkLabel: "View on GitHub",
+    link: "http://localhost:8787",
+    linkLabel: "Launch Live Demo",
+    githubLink: "https://github.com/pratyushpoudel33/solar-feasibility",
     isLive: true,
     accent: 142, // green
   },
