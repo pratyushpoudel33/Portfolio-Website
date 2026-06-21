@@ -3,484 +3,1175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pratyush Poudel - Portfolio</title>
+    <title>Pratyush Poudel — Mechanical Engineer & Computational Researcher</title>
+    <meta name="description" content="Portfolio of Pratyush Poudel — Mechanical Engineering student at Kathmandu University specializing in computational modeling, machine learning diagnostics, and renewable energy systems.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
+        /* ── Design Tokens ─────────────────────────────────────── */
+        :root {
+            --indigo: #6366f1;
+            --violet: #8b5cf6;
+            --sky: #38bdf8;
+            --emerald: #34d399;
+            --card-bg: rgba(255,255,255,0.72);
+            --card-border: rgba(99,102,241,0.13);
+            --glass-blur: 18px;
         }
-        .hero-bg {
-            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+
+        /* ── Base ──────────────────────────────────────────────── */
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f0f7;
+            color: #1e1b4b;
+            overflow-x: hidden;
+        }
+
+        /* ── Decorative mesh background ────────────────────────── */
+        .mesh-bg {
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(99,102,241,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 90%, rgba(139,92,246,0.15) 0%, transparent 55%),
+                linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #4338ca 100%);
+        }
+
+        /* ── Navbar ────────────────────────────────────────────── */
+        #navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 50;
+            transition: background 0.35s, box-shadow 0.35s;
+        }
+        #navbar.scrolled {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 1px 24px rgba(99,102,241,0.10);
+        }
+        .nav-link {
+            position: relative;
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+            font-size: 0.92rem;
+            transition: color 0.2s;
+            padding-bottom: 2px;
+        }
+        #navbar.scrolled .nav-link { color: #4b5563; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; right: 0;
+            height: 2px;
+            background: var(--indigo);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transition: transform 0.25s;
+        }
+        .nav-link:hover { color: white; }
+        #navbar.scrolled .nav-link:hover { color: var(--indigo); }
+        .nav-link:hover::after { transform: scaleX(1); }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: white;
+            transition: color 0.3s;
+        }
+        #navbar.scrolled .nav-logo { color: var(--indigo); }
+
+        /* ── Hero ──────────────────────────────────────────────── */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            top: -120px; right: -120px;
+            animation: float 8s ease-in-out infinite;
+        }
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            width: 350px; height: 350px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            bottom: -80px; left: -60px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-28px) scale(1.04); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 100px;
+            padding: 5px 14px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .hero-badge span.dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #34d399;
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero-cta-primary {
+            background: white;
+            color: var(--indigo);
+            padding: 13px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+            text-decoration: none;
+        }
+        .hero-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(0,0,0,0.25);
+        }
+        .hero-cta-secondary {
+            border: 2px solid rgba(255,255,255,0.7);
+            color: white;
+            padding: 13px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s;
+            text-decoration: none;
+        }
+        .hero-cta-secondary:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: white;
+        }
+
+        .avatar-ring {
+            position: relative;
+            width: 280px; height: 280px;
+        }
+        @media (min-width: 768px) {
+            .avatar-ring { width: 340px; height: 340px; }
+        }
+        .avatar-ring .ring-1 {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            animation: ring-pulse 3s ease-in-out infinite;
+        }
+        .avatar-ring .ring-2 {
+            position: absolute;
+            inset: 16px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+        }
+        .avatar-ring .ring-3 {
+            position: absolute;
+            inset: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
+        }
+        @keyframes ring-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.04); opacity: 0.6; }
+        }
+
+        /* ── Section headers ───────────────────────────────────── */
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--indigo);
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: #1e1b4b;
+            line-height: 1.15;
+        }
+        .section-underline {
+            width: 52px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--indigo), var(--violet));
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+
+        /* ── Scroll animation utility ─────────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1),
+                        transform 0.65s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+        .reveal-delay-1 { transition-delay: 0.08s; }
+        .reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-delay-4 { transition-delay: 0.32s; }
+
+        /* ── Project Filter Tabs ───────────────────────────────── */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .filter-btn {
+            padding: 8px 22px;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.22s;
+            background: white;
+            color: #6b7280;
+            border-color: #e5e7eb;
+            outline: none;
+        }
+        .filter-btn:hover {
+            border-color: var(--indigo);
+            color: var(--indigo);
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--indigo), var(--violet));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+        }
+
+        /* ── Project Cards ─────────────────────────────────────── */
+        #projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+        @media (min-width: 640px) {
+            #projects-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            #projects-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            box-shadow: 0 4px 24px rgba(99,102,241,0.06);
+            transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-7px);
+            box-shadow: 0 20px 48px rgba(99,102,241,0.16);
+            border-color: rgba(99,102,241,0.28);
         }
-        .skill-pill:hover {
-            transform: scale(1.05);
+
+        .card-accent-bar {
+            height: 4px;
+            width: 100%;
         }
+
+        .card-body { padding: 24px; flex: 1; }
+        .card-footer { padding: 0 24px 20px; }
+
+        .card-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+            margin-bottom: 10px;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(52,211,153,0.15);
+            color: #059669;
+            border: 1px solid rgba(52,211,153,0.4);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 3px 9px;
+            border-radius: 100px;
+            margin-left: 6px;
+        }
+        .live-badge .blink {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e1b4b;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .card-desc {
+            font-size: 0.845rem;
+            color: #6b7280;
+            line-height: 1.65;
+            margin-bottom: 14px;
+        }
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .card-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 6px;
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--indigo);
+            text-decoration: none;
+            margin-top: 16px;
+            transition: gap 0.2s, color 0.2s;
+        }
+        .card-link:hover {
+            color: var(--violet);
+            gap: 10px;
+        }
+        .card-link svg {
+            transition: transform 0.2s;
+        }
+        .card-link:hover svg { transform: translateX(3px); }
+
+        /* card hidden state */
+        .project-card.hidden-card {
+            display: none;
+        }
+
+        /* ── Skill Cards ───────────────────────────────────────── */
+        .skill-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 16px rgba(99,102,241,0.07);
+            border: 1px solid rgba(99,102,241,0.09);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .skill-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 32px rgba(99,102,241,0.15);
+        }
+        .skill-icon-wrap {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            flex-shrink: 0;
+        }
+        .skill-bar-track {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1.1s cubic-bezier(0.22,1,0.36,1);
+        }
+
+        /* ── About stats ───────────────────────────────────────── */
+        .stat-box {
+            background: rgba(99,102,241,0.08);
+            border-radius: 16px;
+            padding: 18px 22px;
+            text-align: center;
+            flex: 1;
+        }
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--indigo);
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: #6b7280;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* ── Contact section ───────────────────────────────────── */
+        .contact-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 48px rgba(99,102,241,0.12);
+            overflow: hidden;
+        }
+        .contact-sidebar {
+            background: linear-gradient(160deg, #4f46e5, #7c3aed);
+            padding: 40px 32px;
+            color: white;
+        }
+        .contact-info-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+        .contact-icon-wrap {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .form-input {
+            width: 100%;
+            padding: 11px 16px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fafafa;
+            color: #1e1b4b;
+        }
+        .form-input:focus {
+            border-color: var(--indigo);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+            background: white;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--indigo), var(--violet));
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.45);
+        }
+        .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+        /* ── Footer ────────────────────────────────────────────── */
+        .site-footer {
+            background: #0f0c29;
+            background: linear-gradient(160deg, #1e1b4b, #0f0c29);
+            color: #94a3b8;
+        }
+
+        /* ── Mobile menu ───────────────────────────────────────── */
+        #mobile-menu {
+            display: none;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        #mobile-menu.open { display: block; }
+        .mobile-nav-link {
+            display: block;
+            padding: 12px 24px;
+            font-weight: 500;
+            color: #374151;
+            text-decoration: none;
+            border-bottom: 1px solid #f3f4f6;
+            transition: color 0.2s, background 0.2s;
+        }
+        .mobile-nav-link:hover { color: var(--indigo); background: #f5f3ff; }
+
+        /* ── Hamburger ─────────────────────────────────────────── */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            display: block;
+            width: 22px; height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        #navbar.scrolled .hamburger span { background: #374151; }
     </style>
 </head>
-<body class="bg-gray-50">
-    <nav class="bg-white shadow-md fixed w-full z-10">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-indigo-600">Portfolio</a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-700 hover:text-indigo-600 transition duration-300">About</a>
-                <a href="#projects" class="text-gray-700 hover:text-indigo-600 transition duration-300">Projects</a>
-                <a href="#skills" class="text-gray-700 hover:text-indigo-600 transition duration-300">Skills</a>
-                <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition duration-300">Contact</a>
+<body>
+
+    <!-- ────────── NAV ────────── -->
+    <nav id="navbar">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="nav-logo">Pratyush.</a>
+
+            <!-- Desktop links -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about"    class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects & Tools</a>
+                <a href="#skills"   class="nav-link">Skills</a>
+                <a href="#contact"  class="nav-link">Contact</a>
+                <a href="https://github.com/Pratyush-Poudel" target="_blank" rel="noopener noreferrer"
+                   class="nav-link flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.165c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.332-5.467-5.93 0-1.31.468-2.38 1.236-3.22-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.52 11.52 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.655 1.652.243 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.814 1.103.814 2.222v3.293c0 .322.216.694.825.576C20.565 21.796 24 17.298 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
             </div>
-            <button class="md:hidden focus:outline-none" id="menu-button">
-                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
+
+            <!-- Hamburger (mobile) -->
+            <button class="md:hidden hamburger" id="menu-button" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
             </button>
         </div>
-        <div class="md:hidden hidden bg-white w-full py-2 shadow-inner" id="mobile-menu">
-            <div class="flex flex-col space-y-3 px-6">
-                <a href="#about" class="text-gray-700 hover:text-indigo-600 transition duration-300">About</a>
-                <a href="#projects" class="text-gray-700 hover:text-indigo-600 transition duration-300">Projects</a>
-                <a href="#skills" class="text-gray-700 hover:text-indigo-600 transition duration-300">Skills</a>
-                <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition duration-300">Contact</a>
-            </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu">
+            <a href="#about"    class="mobile-nav-link">About</a>
+            <a href="#projects" class="mobile-nav-link">Projects & Tools</a>
+            <a href="#skills"   class="mobile-nav-link">Skills</a>
+            <a href="#contact"  class="mobile-nav-link">Contact</a>
+            <a href="https://github.com/Pratyush-Poudel" target="_blank" rel="noopener noreferrer" class="mobile-nav-link">GitHub ↗</a>
         </div>
     </nav>
 
-    <section class="hero-bg min-h-screen flex items-center pt-16">
-        <div class="container mx-auto px-6 py-24 md:flex md:items-center">
+    <!-- ────────── HERO ────────── -->
+    <section class="hero-section mesh-bg" id="home">
+        <div class="max-w-6xl mx-auto px-6 w-full py-16 flex flex-col md:flex-row md:items-center gap-12 relative z-10">
+
             <div class="md:w-1/2 text-center md:text-left text-white">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6">Hi, I'm <span class="text-yellow-300">Pratyush Poudel</span></h1>
-                <p class="text-xl md:text-2xl mb-8">Mechanical Engineering Student at KU specialized in computational modeling, machine learning diagnostics, and renewable systems.</p>
-                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center md:justify-start">
-                    <a href="#projects" class="bg-white text-indigo-700 px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition duration-300 shadow-lg">View My Work</a>
-                    <a href="#contact" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-indigo-700 transition duration-300">Contact Me</a>
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Available for collaboration
+                </div>
+                <h1 class="font-extrabold leading-none mb-5"
+                    style="font-family:'Syne',sans-serif; font-size:clamp(2.4rem,6vw,3.6rem);">
+                    Hi, I'm<br>
+                    <span style="background: linear-gradient(90deg,#fde68a,#fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+                        Pratyush Poudel
+                    </span>
+                </h1>
+                <p class="text-indigo-100 text-lg md:text-xl mb-10 max-w-lg leading-relaxed">
+                    Mechanical Engineering student at KU — bridging traditional engineering with computational modeling, machine learning, and renewable energy systems.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <a href="#projects" class="hero-cta-primary">View My Work</a>
+                    <a href="#contact"  class="hero-cta-secondary">Get In Touch</a>
                 </div>
             </div>
-            <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center">
-                <div class="relative w-64 h-64 md:w-80 md:h-80">
-                    <div class="absolute inset-0 rounded-full bg-white bg-opacity-20 animate-pulse"></div>
-                    <div class="absolute inset-3 rounded-full bg-white bg-opacity-30"></div>
-                    <div class="absolute inset-6 rounded-full bg-white flex items-center justify-center overflow-hidden">
-                        <img src="assets/pratyush-photo.png" alt="Pratyush Poudel" class="w-full h-full object-cover">
+
+            <div class="md:w-1/2 flex justify-center">
+                <div class="avatar-ring">
+                    <div class="ring-1"></div>
+                    <div class="ring-2"></div>
+                    <div class="ring-3">
+                        <img src="assets/pratyush-photo.png" alt="Pratyush Poudel" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white opacity-60" style="z-index:10;">
+            <span style="font-size:0.72rem;letter-spacing:0.1em;font-weight:600;">SCROLL</span>
+            <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </div>
     </section>
 
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-800">About Me</h2>
-                <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
-            </div>
-            <div class="md:flex md:items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
+    <!-- ────────── ABOUT ────────── -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="md:flex md:items-center gap-16">
+
+                <!-- Photo side -->
+                <div class="md:w-5/12 mb-12 md:mb-0 reveal">
                     <div class="relative">
-                        <div class="w-full h-80 bg-indigo-100 rounded-lg overflow-hidden">
-                            <img src="assets/photo.jpg" alt="Pratyush Poudel" class="w-full h-full object-cover">
+                        <div class="rounded-2xl overflow-hidden" style="height:420px;">
+                            <img src="assets/photo.jpg" alt="Pratyush Poudel" style="width:100%;height:100%;object-fit:cover;">
                         </div>
-                        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-indigo-600 rounded-lg"></div>
+                        <!-- Decorative block -->
+                        <div class="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl"
+                             style="background:linear-gradient(135deg,var(--indigo),var(--violet));opacity:0.9;"></div>
+                        <!-- Floating stat card -->
+                        <div class="absolute -left-5 bottom-12 bg-white rounded-xl shadow-xl px-5 py-3 flex items-center gap-3 reveal reveal-delay-2">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background:rgba(99,102,241,0.12);">
+                                <svg class="w-5 h-5" style="color:var(--indigo);" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium">Projects Completed</p>
+                                <p class="font-bold text-gray-800">4+ Research Works</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="md:w-1/2 md:pl-12">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Who I Am</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
+
+                <!-- Text side -->
+                <div class="md:w-7/12 reveal reveal-delay-1">
+                    <p class="section-label">Who I Am</p>
+                    <h2 class="section-title mb-4">About Me</h2>
+                    <div class="section-underline mb-8"></div>
+
+                    <p class="text-gray-600 mb-5 leading-relaxed">
                         I am a mechanical engineering student at Kathmandu University (Department of Mechanical Engineering), currently in my 6th semester. I focus on combining traditional mechanical principles with advanced software data pipelines, specializing in machine learning algorithms applied to engineering and industrial IoT/energy optimizations.
                     </p>
                     <p class="text-gray-600 mb-8 leading-relaxed">
                         Through technical coursework, field factory audits, and computational modeling, I have built practical frameworks across fluid mechanics, thermodynamics, and predictive energy analytics. I aim to continuously engineer systems that optimize efficiency and reduce structural carbon footprints.
                     </p>
-                    <div class="flex flex-wrap gap-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-800">Education</h4>
-                                <p class="text-gray-600">Kathmandu University (DoME)</p>
-                            </div>
+
+                    <!-- Stat boxes -->
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="stat-box">
+                            <div class="stat-number">6th</div>
+                            <div class="stat-label">Semester · KU DoME</div>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-800">Timeline</h4>
-                                <p class="text-gray-600">3rd Year, 6th Semester</p>
-                            </div>
+                        <div class="stat-box">
+                            <div class="stat-number">4+</div>
+                            <div class="stat-label">Projects & Tools</div>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-800">Focus Areas</h4>
-                                <p class="text-gray-600">Machine Learning & Renewables</p>
-                            </div>
+                        <div class="stat-box">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Research Papers</div>
                         </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-1.5 rounded-full text-sm font-semibold" style="background:#ede9fe;color:#7c3aed;">Machine Learning</span>
+                        <span class="px-4 py-1.5 rounded-full text-sm font-semibold" style="background:#ecfdf5;color:#059669;">Renewable Energy</span>
+                        <span class="px-4 py-1.5 rounded-full text-sm font-semibold" style="background:#eff6ff;color:#2563eb;">CFD & Thermal</span>
+                        <span class="px-4 py-1.5 rounded-full text-sm font-semibold" style="background:#fff7ed;color:#c2410c;">IoT Systems</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-800">Key Projects & Research</h2>
-                <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
-                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Engineering studies combining field analytics, thermal structures, and algorithmic predictive programming.</p>
+    <!-- ────────── PROJECTS ────────── -->
+    <section id="projects" class="py-24" style="background:#f5f3ff;">
+        <div class="max-w-6xl mx-auto px-6">
+
+            <div class="text-center mb-12 reveal">
+                <p class="section-label">My Work</p>
+                <h2 class="section-title">Projects & Tools</h2>
+                <div class="section-underline mx-auto mb-5"></div>
+                <p class="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
+                    Engineering research combining field analytics, thermal structures, and algorithmic programming — plus live interactive tools built from scratch.
+                </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg project-card transition duration-300 flex flex-col justify-between">
-                    <div class="p-6">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600">Thermal Design & Optimization</span>
-                        <h3 class="text-xl font-semibold text-gray-800 mt-1 mb-2">20 kW Biomass Pellet Burner Prototype</h3>
-                        <p class="text-gray-600 mb-4 text-sm">Designed and calculated flue gas energy losses and efficiency optimization pathways for a mechanized biomass pellet burner blueprint tailored for industrial food operations in Nepal.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-indigo-100 text-indigo-600 rounded text-xs">Thermodynamics</span>
-                            <span class="px-2 py-1 bg-indigo-100 text-indigo-600 rounded text-xs">Flue Gas Analysis</span>
-                            <span class="px-2 py-1 bg-indigo-100 text-indigo-600 rounded text-xs">Prototyping</span>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6">
-                        <a href="docs/Biomass_Burner_Report.pdf" target="_blank" class="text-indigo-600 font-medium hover:text-indigo-800 transition duration-300 flex items-center text-sm">
-                            View Case Study Documentation
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg project-card transition duration-300 flex flex-col justify-between">
-                    <div class="p-6">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-purple-600">Renewable Infrastructure</span>
-                        <h3 class="text-xl font-semibold text-gray-800 mt-1 mb-2">Solar Mini-Grid Electrification Study</h3>
-                        <p class="text-gray-600 mb-4 text-sm">Authored a comprehensive technical case study evaluating the Khanikhola Rural Municipality Solar Mini-Grid infrastructure design paired with municipal energy plan regulations.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-purple-100 text-purple-600 rounded text-xs">Solar Grids</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-600 rounded text-xs">Energy Policy</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-600 rounded text-xs">Fluid-Thermal Systems</span>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6">
-                        <a href="docs/Khanikhola_Solar_Grid.pdf" target="_blank" class="text-purple-600 font-medium hover:text-purple-800 transition duration-300 flex items-center text-sm">
-                            Open Technical Report
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg project-card transition duration-300 flex flex-col justify-between">
-                    <div class="p-6">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">Computational Intelligence</span>
-                        <h3 class="text-xl font-semibold text-gray-800 mt-1 mb-2">ML Architectures for Diagnostics & IoT</h3>
-                        <p class="text-gray-600 mb-4 text-sm">Evaluated multi-model machine learning applications (Random Forest, XGBoost, and Logistic Regression) for clinical diagnostic arrays and industrial network time-series data forecasting.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded text-xs">XGBoost & RF</span>
-                            <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded text-xs">IoT Forecasting</span>
-                            <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded text-xs">Data Modeling</span>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6">
-                        <a href="docs/ML_Medical_IoT_Paper.pdf" target="_blank" class="text-blue-600 font-medium hover:text-blue-800 transition duration-300 flex items-center text-sm">
-                            Read Research Paper Draft
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+
+            <!-- Filter tabs -->
+            <div class="filter-tabs mb-10 reveal reveal-delay-1">
+                <button class="filter-btn active" data-filter="all"      id="filter-all">All</button>
+                <button class="filter-btn"        data-filter="Research" id="filter-research">Research</button>
+                <button class="filter-btn"        data-filter="Tool"     id="filter-tool">Tools & Apps</button>
             </div>
-            <div class="text-center mt-12">
-                <a href="https://github.com/Pratyush-Poudel" target="_blank" rel="noopener noreferrer" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-full font-medium hover:bg-indigo-700 transition duration-300 shadow-md">View GitHub Workspace</a>
+
+            <!-- Dynamic grid (rendered by JS) -->
+            <div id="projects-grid" aria-label="Projects grid"></div>
+
+            <!-- GitHub CTA -->
+            <div class="text-center mt-14 reveal">
+                <a href="https://github.com/Pratyush-Poudel" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-sm text-white transition-all"
+                   style="background:linear-gradient(135deg,#4f46e5,#7c3aed);box-shadow:0 6px 24px rgba(99,102,241,0.4);"
+                   onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 32px rgba(99,102,241,0.5)'"
+                   onmouseout="this.style.transform='';this.style.boxShadow='0 6px 24px rgba(99,102,241,0.4)'">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.165c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.332-5.467-5.93 0-1.31.468-2.38 1.236-3.22-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.52 11.52 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.655 1.652.243 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.814 1.103.814 2.222v3.293c0 .322.216.694.825.576C20.565 21.796 24 17.298 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    View GitHub Workspace
+                </a>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-800">My Skills</h2>
-                <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
-                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Core computational and technical competencies cultivated through research projects and academic coursework.</p>
+    <!-- ────────── SKILLS ────────── -->
+    <section id="skills" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+
+            <div class="text-center mb-12 reveal">
+                <p class="section-label">Competencies</p>
+                <h2 class="section-title">My Skills</h2>
+                <div class="section-underline mx-auto mb-5"></div>
+                <p class="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
+                    Core technical competencies cultivated through research projects and academic coursework.
+                </p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.354 18 4.828 18h10.343c2.474 0 4.011-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z" clip-rule="evenodd"></path>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="skills-grid">
+
+                <div class="skill-card reveal">
+                    <div class="skill-icon-wrap" style="background:#ede9fe;">
+                        <svg class="w-7 h-7" style="color:#7c3aed;" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.354 18 4.828 18h10.343c2.474 0 4.011-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">CFD Analysis</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 70%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">CFD Analysis</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#6366f1,#8b5cf6);" data-width="70"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">70%</p>
                 </div>
-                
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
+
+                <div class="skill-card reveal reveal-delay-1">
+                    <div class="skill-icon-wrap" style="background:#fef3c7;">
+                        <svg class="w-7 h-7" style="color:#d97706;" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">CAD Design</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-yellow-600 h-2.5 rounded-full" style="width: 75%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">CAD Design</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#f59e0b,#d97706);" data-width="75"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">75%</p>
                 </div>
-                
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+
+                <div class="skill-card reveal reveal-delay-2">
+                    <div class="skill-icon-wrap" style="background:#dbeafe;">
+                        <svg class="w-7 h-7" style="color:#2563eb;" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">Thermal Analysis</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 65%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">Thermal Analysis</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#3b82f6,#2563eb);" data-width="65"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">65%</p>
                 </div>
-                
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+
+                <div class="skill-card reveal reveal-delay-3">
+                    <div class="skill-icon-wrap" style="background:#dcfce7;">
+                        <svg class="w-7 h-7" style="color:#16a34a;" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">Renewable Energy</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 70%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">Renewable Energy</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#22c55e,#16a34a);" data-width="70"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">70%</p>
                 </div>
-                
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13 7H7v6h6V7z"></path>
-                            <path fill-rule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z" clip-rule="evenodd"></path>
+
+                <div class="skill-card reveal">
+                    <div class="skill-icon-wrap" style="background:#f5f3ff;">
+                        <svg class="w-7 h-7" style="color:#7c3aed;" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13 7H7v6h6V7z"/>
+                            <path fill-rule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">Fluid Mechanics</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-purple-600 h-2.5 rounded-full" style="width: 75%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">Fluid Mechanics</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#8b5cf6,#7c3aed);" data-width="75"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">75%</p>
                 </div>
-                
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+
+                <div class="skill-card reveal reveal-delay-1">
+                    <div class="skill-icon-wrap" style="background:#fee2e2;">
+                        <svg class="w-7 h-7" style="color:#dc2626;" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">Machine Learning</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-red-600 h-2.5 rounded-full" style="width: 75%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">Machine Learning</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#ef4444,#dc2626);" data-width="75"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">75%</p>
                 </div>
-                
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1v-3a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+
+                <div class="skill-card reveal reveal-delay-2">
+                    <div class="skill-icon-wrap" style="background:#fce7f3;">
+                        <svg class="w-7 h-7" style="color:#be185d;" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1v-3a1 1 0 00-1-1z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">Technical Drawing</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-pink-600 h-2.5 rounded-full" style="width: 70%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">Technical Drawing</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#ec4899,#be185d);" data-width="70"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">70%</p>
                 </div>
-                
-                <div class="skill-pill bg-white p-6 rounded-lg shadow-md border border-gray-100 flex flex-col items-center transition duration-300">
-                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+
+                <div class="skill-card reveal reveal-delay-3">
+                    <div class="skill-icon-wrap" style="background:#fff7ed;">
+                        <svg class="w-7 h-7" style="color:#c2410c;" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-800">Prototyping</h3>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                        <div class="bg-orange-600 h-2.5 rounded-full" style="width: 65%"></div>
+                    <h3 class="font-semibold text-gray-800 text-sm text-center">Prototyping</h3>
+                    <div class="skill-bar-track w-full">
+                        <div class="skill-bar-fill" style="background:linear-gradient(90deg,#f97316,#c2410c);" data-width="65"></div>
                     </div>
+                    <p class="text-xs text-gray-400 mt-1">65%</p>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-20 bg-indigo-600">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white">Get In Touch</h2>
-                <div class="w-24 h-1 bg-yellow-300 mx-auto mt-4 rounded-full"></div>
-                <p class="text-indigo-100 mt-4 max-w-2xl mx-auto">Have an inquiry or project collaboration in mind? Feel free to reach out directly.</p>
+    <!-- ────────── CONTACT ────────── -->
+    <section id="contact" class="py-24" style="background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);">
+        <div class="max-w-5xl mx-auto px-6">
+
+            <div class="text-center mb-12 reveal">
+                <p class="section-label" style="color:#c4b5fd;">Say Hello</p>
+                <h2 class="section-title text-white">Get In Touch</h2>
+                <div class="section-underline mx-auto mb-4" style="background:linear-gradient(90deg,#fde68a,#fbbf24);"></div>
+                <p style="color:#c4b5fd;" class="max-w-xl mx-auto text-sm">
+                    Have an inquiry or project collaboration in mind? Feel free to reach out directly.
+                </p>
             </div>
-            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+
+            <div class="contact-card reveal reveal-delay-1">
                 <div class="md:flex">
-                    <div class="md:w-1/2 bg-indigo-700 p-8 text-white">
-                        <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
-                        <div class="flex items-center mb-6">
-                            <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center mr-4">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+
+                    <!-- Sidebar -->
+                    <div class="contact-sidebar md:w-5/12">
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;" class="mb-8">Contact Information</h3>
+
+                        <div class="contact-info-row">
+                            <div class="contact-icon-wrap">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-indigo-200 text-sm">Location</p>
-                                <p class="font-medium">Kathmandu, Nepal</p>
+                                <p style="color:rgba(255,255,255,0.6);font-size:0.75rem;" class="font-medium">Location</p>
+                                <p class="font-semibold">Kathmandu, Nepal</p>
                             </div>
                         </div>
-                        <div class="flex items-center mb-6">
-                            <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center mr-4">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+
+                        <div class="contact-info-row">
+                            <div class="contact-icon-wrap">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-indigo-200 text-sm">Email</p>
-                                <p class="font-medium">pratyushpoudel3@gmail.com</p>
+                                <p style="color:rgba(255,255,255,0.6);font-size:0.75rem;" class="font-medium">Email</p>
+                                <p class="font-semibold">pratyushpoudel3@gmail.com</p>
                             </div>
                         </div>
+
                         <div class="mt-10">
-                            <h4 class="font-medium mb-4">Connect with me</h4>
-                            <div class="flex space-x-4">
-                                <a href="https://www.linkedin.com/in/pratyush-poudel-a31948253/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-500 transition duration-300">
-                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0V16h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548V16z"/>
+                            <h4 class="font-semibold mb-5" style="color:rgba(255,255,255,0.8);font-size:0.85rem;letter-spacing:0.05em;">CONNECT WITH ME</h4>
+                            <div class="flex gap-3">
+                                <a href="https://www.linkedin.com/in/pratyush-poudel-a31948253/" target="_blank" rel="noopener noreferrer"
+                                   title="LinkedIn"
+                                   class="w-10 h-10 rounded-full flex items-center justify-center transition-all"
+                                   style="background:rgba(255,255,255,0.15);"
+                                   onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://github.com/Pratyush-Poudel" target="_blank" rel="noopener noreferrer"
+                                   title="GitHub"
+                                   class="w-10 h-10 rounded-full flex items-center justify-center transition-all"
+                                   style="background:rgba(255,255,255,0.15);"
+                                   onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.165c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.332-5.467-5.93 0-1.31.468-2.38 1.236-3.22-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.52 11.52 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.655 1.652.243 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.814 1.103.814 2.222v3.293c0 .322.216.694.825.576C20.565 21.796 24 17.298 24 12c0-6.63-5.37-12-12-12z"/>
                                     </svg>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="md:w-1/2 p-8">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Send a Message</h3>
+
+                    <!-- Form -->
+                    <div class="md:w-7/12 p-10">
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:#1e1b4b;" class="mb-7">Send a Message</h3>
                         <form id="contact-form" action="https://formspree.io/f/xkoakjpd" method="POST">
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 text-sm font-medium mb-2">Full Name</label>
-                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Your name" required>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" id="email" name="email" class="form-input" placeholder="Your email" required>
+                                </div>
                             </div>
                             <div class="mb-4">
-                                <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
-                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Your email" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="subject" class="block text-gray-700 text-sm font-medium mb-2">Subject</label>
-                                <input type="text" id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Subject">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" name="subject" class="form-input" placeholder="Subject">
                             </div>
                             <div class="mb-6">
-                                <label for="message" class="block text-gray-700 text-sm font-medium mb-2">Message</label>
-                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Your message" required></textarea>
+                                <label for="message" class="form-label">Message</label>
+                                <textarea id="message" name="message" rows="4" class="form-input" placeholder="Your message" required style="resize:vertical;"></textarea>
                             </div>
-                            <button type="submit" id="submit-btn" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">Send Message</button>
+                            <button type="submit" id="submit-btn" class="submit-btn">Send Message</button>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <a href="#" class="text-2xl font-bold text-white">Portfolio</a>
-                    <p class="text-gray-400 mt-2">Bridging Mechanical Design with Computational Modeling</p>
+    <!-- ────────── FOOTER ────────── -->
+    <footer class="site-footer py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <a href="#" style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;" class="text-white">Pratyush.</a>
+                    <p class="text-sm mt-1" style="color:#64748b;">Bridging Mechanical Design with Computational Modeling</p>
                 </div>
-                <div class="flex flex-wrap justify-center space-x-6">
-                    <a href="#about" class="text-gray-300 hover:text-white transition duration-300">About</a>
-                    <a href="#projects" class="text-gray-300 hover:text-white transition duration-300">Projects</a>
-                    <a href="#skills" class="text-gray-300 hover:text-white transition duration-300">Skills</a>
-                    <a href="#contact" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="#about"    class="text-sm font-medium transition-colors" style="color:#94a3b8;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">About</a>
+                    <a href="#projects" class="text-sm font-medium transition-colors" style="color:#94a3b8;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">Projects</a>
+                    <a href="#skills"   class="text-sm font-medium transition-colors" style="color:#94a3b8;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">Skills</a>
+                    <a href="#contact"  class="text-sm font-medium transition-colors" style="color:#94a3b8;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">Contact</a>
                 </div>
             </div>
-            <hr class="border-gray-800 my-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400">© 2026 Pratyush Poudel. All rights reserved.</p>
-            </div>
+            <hr style="border-color:rgba(255,255,255,0.06);margin:32px 0;">
+            <p class="text-center text-sm" style="color:#475569;">© 2026 Pratyush Poudel. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- ────────── SCRIPTS ────────── -->
+    <script src="projects.js"></script>
     <script>
-        // Mobile menu toggle
-        const menuButton = document.getElementById('menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        menuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+    // ── Navbar scroll effect ──────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── Mobile menu ───────────────────────────────────────────
+    const menuBtn    = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // ── Smooth scroll for anchor links ────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const id = this.getAttribute('href');
+            if (id === '#') return;
+            e.preventDefault();
+            const el = document.querySelector(id);
+            if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
         });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 70, // Offset for fixed nav
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
+    });
+
+    // ── Project card renderer ─────────────────────────────────
+    const CATEGORY_META = {
+        Research: { bg: '#ede9fe', color: '#7c3aed', icon: '📄' },
+        Tool:     { bg: '#dcfce7', color: '#16a34a', icon: '⚡' },
+        Software: { bg: '#dbeafe', color: '#2563eb', icon: '💻' },
+    };
+
+    function accentGradient(hue) {
+        return `linear-gradient(135deg, hsl(${hue},80%,55%), hsl(${hue+25},75%,50%))`;
+    }
+
+    function renderProjects(filter) {
+        const grid = document.getElementById('projects-grid');
+        grid.innerHTML = '';
+
+        const filtered = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.category === filter);
+
+        filtered.forEach((p, i) => {
+            const meta = CATEGORY_META[p.category] || CATEGORY_META.Research;
+            const delay = (i % 3) * 0.08;
+
+            const card = document.createElement('div');
+            card.className = 'project-card reveal';
+            card.style.transitionDelay = `${delay}s`;
+            card.dataset.category = p.category;
+
+            card.innerHTML = `
+                <div class="card-accent-bar" style="background:${accentGradient(p.accent)};"></div>
+                <div class="card-body">
+                    <div class="flex items-center flex-wrap gap-1 mb-2">
+                        <span class="card-category" style="background:${meta.bg};color:${meta.color};">
+                            ${meta.icon} ${p.category}
+                        </span>
+                        ${p.isLive ? `<span class="live-badge"><span class="blink"></span>LIVE</span>` : ''}
+                    </div>
+                    <h3 class="card-title">${p.title}</h3>
+                    <p class="card-desc">${p.description}</p>
+                    <div class="card-tags">
+                        ${p.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="card-link">
+                        ${p.linkLabel}
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            `;
+
+            grid.appendChild(card);
+        });
+
+        // Trigger scroll reveal on new cards
+        requestAnimationFrame(() => observeRevealElements());
+    }
+
+    // ── Filter tabs ───────────────────────────────────────────
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            renderProjects(this.dataset.filter);
+        });
+    });
+
+    // ── IntersectionObserver for reveal animations ─────────────
+    function observeRevealElements() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+
+                    // Animate skill bars when skills section comes in view
+                    const fill = entry.target.querySelector('.skill-bar-fill');
+                    if (fill) {
+                        const target = fill.dataset.width;
+                        setTimeout(() => { fill.style.width = target + '%'; }, 200);
                     }
                 }
             });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (!el.classList.contains('visible')) observer.observe(el);
         });
+    }
 
-        // Async handling for form queries
-        const contactForm = document.getElementById('contact-form');
-        const submitBtn = document.getElementById('submit-btn');
+    // ── Contact form ──────────────────────────────────────────
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn   = document.getElementById('submit-btn');
 
-        if(contactForm) {
-            contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending Message...';
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            submitBtn.disabled   = true;
+            submitBtn.textContent = 'Sending…';
 
-                const formData = new FormData(contactForm);
+            try {
+                const res = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
 
-                try {
-                    const response = await fetch(contactForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        alert('Message sent successfully!');
-                        contactForm.reset();
-                    } else {
-                        const data = await response.json();
-                        alert(data.errors ? data.errors.map(err => err.message).join(', ') : 'Error processing form submission.');
-                    }
-                } catch (error) {
-                    alert('Network error encountered. Please check internet configurations and try again.');
-                } finally {
-                    submitBtn.disabled = false;
+                if (res.ok) {
+                    submitBtn.textContent = '✓ Message Sent!';
+                    submitBtn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+                    contactForm.reset();
+                    setTimeout(() => {
+                        submitBtn.textContent = 'Send Message';
+                        submitBtn.style.background = '';
+                        submitBtn.disabled = false;
+                    }, 4000);
+                } else {
+                    const data = await res.json();
+                    alert(data.errors ? data.errors.map(err => err.message).join(', ') : 'Error processing form submission.');
+                    submitBtn.disabled   = false;
                     submitBtn.textContent = 'Send Message';
                 }
-            });
-        }
+            } catch {
+                alert('Network error. Please check your connection and try again.');
+                submitBtn.disabled   = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+    }
+
+    // ── Init ──────────────────────────────────────────────────
+    renderProjects('all');
+    observeRevealElements();
     </script>
 </body>
 </html>
